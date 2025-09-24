@@ -1,58 +1,88 @@
-import { Platform, Pressable, StyleSheet, Text } from 'react-native'
+import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import Categories from '../components/Categories'
-import TodoList from '../components/TodoList'
-import { StatusBar } from 'expo-status-bar'
-import FormModal from '../components/FormModal'
 
 export default function index() {
-  const [showModal, setShowModal] = useState<boolean>(false);
+  // username
+  const [user, setUser] = useState<string>("");
+  console.log(user)
+
 
   return (
-    <SafeAreaView edges={["left", "top", "right"]} style={styles.container}>
-      <StatusBar style={"light"} />
-      <Text style={styles.welcomeTxt}>What's up, Victoria!</Text>
-      <Categories />
-      <TodoList />
-      <FormModal showModal={showModal} setShowModal={setShowModal} />
-      <Pressable style={styles.addBtn} onPress={() => setShowModal(true)}>
-        <Text style={styles.add}>+</Text>
-      </Pressable>
+    <SafeAreaView style={styles.container}>
+          <View style={styles.welcomeContainer}>
+            <Text style={styles.appName}>Taskify</Text>
+            <Text style={styles.welcome}>Welcome</Text>
+          </View>
+          <KeyboardAvoidingView behavior="padding">
+          <View style={styles.formContainer}>
+            <View style={styles.fieldContainer}>
+              <Text style={styles.fieldName}></Text>
+              <TextInput
+                style={styles.input}
+                autoCapitalize="none"
+                placeholder='Enter your name'
+                placeholderTextColor={"#a49d9dff"}
+                onChangeText={setUser}
+              />
+            </View>
+            <Pressable style={styles.cntBtn}>
+              <Text style={styles.cntTxt}>Continue</Text>
+            </Pressable>
+          </View>
+          </KeyboardAvoidingView>
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#000000",
     flex: 1,
-    backgroundColor: "#000000",
-    position: "relative"
+    paddingTop: 70,
   },
-  welcomeTxt: {
-    color: "#ffffff",
-    fontSize: 40,
+  innerContainer: {
+    backgroundColor: "purple",
+    justifyContent: "space-between"
+  },
+  welcomeContainer: {
+    marginBottom: 120
+  },
+  appName: {
+    color: "#e8ff54",
+    fontSize: 50,
     fontWeight: "bold",
-    marginBottom: 25,
-    marginLeft: 20
+    textAlign: "center",
+    marginBottom: 20
   },
-  addBtn: {
-    backgroundColor: "#000000",
-    width: 60,
-    height: 60,
-    borderRadius: "100%",
-    borderWidth: 1,
-    borderColor: "#e8ff54",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    position: "absolute",
-    bottom: 20,
-    right: 18
-  },
-  add: {
+  welcome: {
     color: "#ffffff",
-    fontSize: 30,
+    textAlign: "center",
+    fontSize: 27,
+  },
+  formContainer: {
+    paddingHorizontal: 30
+  },
+  fieldContainer: {
+    marginBottom: 30
+  },
+  fieldName: {},
+  input: {
+    color: "#ffffff",
+    fontSize: 16,
+    width: "100%",
+    backgroundColor: "#545151ff",
+    padding: 12,
+    borderRadius: 8
+  },
+  cntBtn: {
+    width: "100%",
+    backgroundColor: "#e8ff54",
+    padding: 12,
+    borderRadius: 8
+  },
+  cntTxt: {
+    fontSize: 16,
     textAlign: "center"
   }
 })

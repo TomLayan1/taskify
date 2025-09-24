@@ -2,9 +2,9 @@ import { Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-nativ
 import { FontAwesome } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import TimePicker from './TimePicker';
-// import { Picker } from '@react-native-picker/picker';
 import { CATEGORYDEMO } from '../data';
 import { CategoryDemoType } from '../interface';
+import DropDown from './DropDown';
 
 
 type FormModalType = {
@@ -62,21 +62,9 @@ export default function FormModal({ showModal, setShowModal}: FormModalType) {
                 onChangeText={setTask}
               />
             </View>
-            {/* <View style={styles.fieldContainer}>
-              <Text style={styles.fieldTitle}>Category</Text>
-              <View style={styles.pickerContainer}>
-                <Picker
-                  style={styles.dropdown}
-                  selectedValue={category}
-                  onValueChange={value => setCategory(value)}
-                >
-                  <Picker.Item color='#a49d9dff' label='Select a category' value="" />
-                  {categories.map((item) => (
-                    <Picker.Item color='#cee72bff' key={item.id} label={item.categoryName} value={item.categoryName} />
-                  ))}
-                </Picker>
-              </View>
-            </View> */}
+            
+            {/* Dropdown */}
+            <DropDown setCategory={setCategory} />
           </View>
 
           {/* Time Picker */}
@@ -96,7 +84,7 @@ export default function FormModal({ showModal, setShowModal}: FormModalType) {
           }
 
           {/* Add Button */}
-          {task && time && <Pressable style={styles.addTodoBtn}>
+          {task && category && time && <Pressable style={styles.addTodoBtn}>
             <Text style={styles.btnText}>Add Task</Text>
           </Pressable>}
         </View>
@@ -150,8 +138,8 @@ const styles = StyleSheet.create({
     padding: 14,
     fontSize: 16,
     borderRadius: 10,
-    borderWidth: 1,
-    color: "#cee72bff"
+    borderWidth: 0.5,
+    color: "#ffffff"
   },
   pickerContainer: {
     borderWidth: 1,
@@ -174,11 +162,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   time: {
-    color: "#cee72bff",
+    color: "#ffffff",
     fontSize: 16
   },
   edit:{
-    color: '#ffffff',
+    color: '#cee72bff',
     fontSize: 16,
     fontWeight: "200"
   },

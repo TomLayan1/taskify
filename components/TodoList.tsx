@@ -11,7 +11,6 @@ export default function TodoList() {
   const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>(
     {}
   );
-  console.log(checkedItems)
 
   const toggleCheckbox = (id: string | number, value: boolean) => {
     setCheckedItems((prev) => ({
