@@ -1,36 +1,43 @@
-import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import { KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { router, useNavigation } from 'expo-router';
+import { useTaskifyStore } from '../taskifyStore';
 
 export default function index() {
-  // username
-  const [user, setUser] = useState<string>("");
-  console.log(user)
+  const [error, setError] = useState<string>("")
+  const { username, setUsername } = useTaskifyStore()
 
+  const handleContinue = () => {
+    username.trim().length > 0 
+    ? router.push('/home')
+    : setError("Enter a username");
+  }
 
   return (
+    
     <SafeAreaView style={styles.container}>
-          <View style={styles.welcomeContainer}>
-            <Text style={styles.appName}>Taskify</Text>
-            <Text style={styles.welcome}>Welcome</Text>
+      <View style={styles.welcomeContainer}>
+        <Text style={styles.appName}>Taskify</Text>
+        <Text style={styles.welcome}>Welcome</Text>
+      </View>
+      <KeyboardAvoidingView behavior="padding">
+        <View style={styles.formContainer}>
+          <View style={styles.fieldContainer}>
+            <Text style={styles.errorText}>{error}</Text>
+            <TextInput
+              style={styles.input}
+              autoCapitalize="none"
+              placeholder='Enter your name'
+              placeholderTextColor={"#a49d9dff"}
+              onChangeText={setUsername}
+            />
           </View>
-          <KeyboardAvoidingView behavior="padding">
-          <View style={styles.formContainer}>
-            <View style={styles.fieldContainer}>
-              <Text style={styles.fieldName}></Text>
-              <TextInput
-                style={styles.input}
-                autoCapitalize="none"
-                placeholder='Enter your name'
-                placeholderTextColor={"#a49d9dff"}
-                onChangeText={setUser}
-              />
-            </View>
-            <Pressable style={styles.cntBtn}>
-              <Text style={styles.cntTxt}>Continue</Text>
-            </Pressable>
-          </View>
-          </KeyboardAvoidingView>
+          <Pressable style={styles.cntBtn} onPress={handleContinue}>
+            <Text style={styles.cntTxt}>Continue</Text>
+          </Pressable>
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   )
 }
@@ -63,10 +70,14 @@ const styles = StyleSheet.create({
   formContainer: {
     paddingHorizontal: 30
   },
+  errorText: {
+    fontSize: 16,
+    color: "#ffffff",
+    marginBottom: 15,
+  },
   fieldContainer: {
     marginBottom: 30
   },
-  fieldName: {},
   input: {
     color: "#ffffff",
     fontSize: 16,

@@ -5,14 +5,16 @@ import Categories from '../../components/Categories'
 import TodoList from '../../components/TodoList'
 import { StatusBar } from 'expo-status-bar'
 import FormModal from '../../components/FormModal'
+import { useTaskifyStore } from '../../taskifyStore'
 
 export default function Home() {
   const [showModal, setShowModal] = useState<boolean>(false);
+  const { username } = useTaskifyStore();
 
   return (
     <SafeAreaView edges={["left", "top", "right"]} style={styles.container}>
       <StatusBar style={"light"} />
-      <Text style={styles.welcomeTxt}>What's up, Ria!</Text>
+      <Text style={styles.welcomeTxt}>Welcome, {username}!</Text>
       <Categories />
       <TodoList />
       <FormModal showModal={showModal} setShowModal={setShowModal} />
@@ -31,7 +33,7 @@ const styles = StyleSheet.create({
   },
   welcomeTxt: {
     color: "#ffffff",
-    fontSize: 40,
+    fontSize: 30,
     fontWeight: "bold",
     marginBottom: 25,
     marginLeft: 20

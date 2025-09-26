@@ -5,6 +5,7 @@ import TimePicker from './TimePicker';
 import { CATEGORYDEMO } from '../data';
 import { CategoryDemoType } from '../interface';
 import DropDown from './DropDown';
+import { useTaskifyStore } from '../taskifyStore';
 
 
 type FormModalType = {
@@ -19,11 +20,9 @@ export default function FormModal({ showModal, setShowModal}: FormModalType) {
   const [category, setCategory] = useState<string>("");
   const [time, setTime] = useState<string>("");
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  // console.log({
-  //   task,
-  //   category,
-  //   time
-  // })
+
+  // import addtask
+  const { tasks, addTask } = useTaskifyStore();
 
   const categories: CategoryDemoType[] = CATEGORYDEMO;
 
@@ -32,6 +31,15 @@ export default function FormModal({ showModal, setShowModal}: FormModalType) {
     setTask("");
     setCategory("");
     setTime("");
+  }
+
+  const handleAddTask = () => {
+    addTask({
+      id: tasks.length + 1,
+      task: task,
+      time: time,
+      category: category
+    })
   }
 
   return (
@@ -45,7 +53,7 @@ export default function FormModal({ showModal, setShowModal}: FormModalType) {
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <View style={styles.modalHeaderContainer}>
-            <Text style={styles.modalTitle}>Add Todo</Text>
+            <Text style={styles.modalTitle}>Add Tasks</Text>
             <Pressable onPress={handleCloseModal}>
               <FontAwesome name="times" size={25} color="#000000" />
             </Pressable>
@@ -84,7 +92,7 @@ export default function FormModal({ showModal, setShowModal}: FormModalType) {
           }
 
           {/* Add Button */}
-          {task && category && time && <Pressable style={styles.addTodoBtn}>
+          {task && category && time && <Pressable style={styles.addTodoBtn} onPress={() => handleAddTask()}>
             <Text style={styles.btnText}>Add Task</Text>
           </Pressable>}
         </View>

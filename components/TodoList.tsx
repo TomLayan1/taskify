@@ -1,23 +1,15 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native'
-import { TODODEMO } from '../data'
-import { TodoDemoType } from '../interface'
-import { useState } from 'react'
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { TODODEMO } from '../data';
+import { TodoDemoType } from '../interface';
 import Checkbox from 'expo-checkbox';
+import { useTaskifyStore } from '../taskifyStore';
 
 export default function TodoList() {
   const todos: TodoDemoType[] = TODODEMO;
-  
-  // store checked state for each todo by id
-  const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>(
-    {}
-  );
 
-  const toggleCheckbox = (id: string | number, value: boolean) => {
-    setCheckedItems((prev) => ({
-      ...prev,
-      [id]: value,
-    }));
-  };
+  const { tasks, checkedItems, toggleCheckbox } = useTaskifyStore();
+
+  console.log(tasks);
 
   return (
     <View style={styles.container}>
@@ -29,29 +21,39 @@ export default function TodoList() {
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => {
           const isChecked = checkedItems[item.id] || false;
-          const isTodoChecked = isChecked;
+
           return (
             <View style={styles.todoCard}>
-              <Checkbox 
+              <Checkbox
                 value={isChecked}
                 onValueChange={(val) => toggleCheckbox(item.id, val)}
                 color={isChecked ? "#000000" : undefined}
                 style={styles.checkBox}
               />
               <View style={styles.todoContainer}>
-                <Text style={[styles.todo,
-                  isTodoChecked && { textDecorationLine: "line-through", color: "gray" }
-                ]}>{item.todo}</Text>
-                <Text style={[styles.todoTime,
-                  isTodoChecked && { textDecorationLine: "line-through", color: "gray" }
-                ]}>{item.time}</Text>
+                <Text
+                  style={[
+                    styles.todo,
+                    isChecked && { textDecorationLine: "line-through", color: "gray" },
+                  ]}
+                >
+                  {item.todo}
+                </Text>
+                <Text
+                  style={[
+                    styles.todoTime,
+                    isChecked && { textDecorationLine: "line-through", color: "gray" },
+                  ]}
+                >
+                  {item.time}
+                </Text>
               </View>
             </View>
-          )
+          );
         }}
       />
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -63,7 +65,7 @@ const styles = StyleSheet.create({
     color: "#e8ff54",
     fontSize: 15,
     fontWeight: "200",
-    marginBottom: 25
+    marginBottom: 25,
   },
   todoCard: {
     backgroundColor: "#e8ff54",
@@ -71,7 +73,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 27,
     padding: 12,
-    borderRadius: 15
+    borderRadius: 15,
   },
   checkBox: {
     width: 22,
@@ -85,10 +87,10 @@ const styles = StyleSheet.create({
     color: "#000000",
     fontSize: 16,
     marginBottom: 5,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   todoTime: {
     color: "#000000",
-    fontSize: 13
-  }
-})
+    fontSize: 13,
+  },
+});
