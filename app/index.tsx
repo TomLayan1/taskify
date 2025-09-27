@@ -1,8 +1,9 @@
 import { KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router, useNavigation } from 'expo-router';
+import { router } from 'expo-router';
 import { useTaskifyStore } from '../taskifyStore';
+
 
 export default function index() {
   const [error, setError] = useState<string>("")
