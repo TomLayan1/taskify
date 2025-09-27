@@ -4,7 +4,7 @@ export interface CategoryDemoType {
   categoryName: string
 }
 
-export interface TodoDemoType {
+export interface TaskListType {
   id: number,
   todo: string,
   time: string,

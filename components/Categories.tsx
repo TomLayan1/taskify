@@ -1,32 +1,36 @@
 import { FlatList, Platform, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { CATEGORYDEMO } from '../data'
 import { CategoryDemoType } from '../interface'
+import { useTaskifyStore } from '../taskifyStore';
 
 export default function Categories() {
-  const categories: CategoryDemoType[] = CATEGORYDEMO;
+  const { getCategoryCounts } = useTaskifyStore();
+  const categories = getCategoryCounts();
+  console.log("Categories: ", categories.length);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>CATEGORIES</Text>
-      <FlatList
-          data={categories}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(item) => item.id.toString()}
-          ItemSeparatorComponent={() => <View style={{ width: 17 }} />}
-          renderItem={({ item }) => {
-            return (
-              <View style={styles.categoryType}>
+    <>
+      {
+        categories.length > 0 &&
+        <View style={styles.container}>
+          <Text style={styles.title}>CATEGORIES</Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          >
+            {categories.map(item => (
+              <View key={item.id} style={styles.categoryType}>
                 <Text style={styles.task}>{item.taskCount} tasks</Text>
                 <Text style={styles.categoryName}>{item.categoryName}</Text>
                 <View style={styles.progressOut}>
                   <View style={[styles.progressIn, { width: `${item.taskCount}%`}]}></View>
                 </View>
               </View>
-            )
-          }}
-        />
-    </View>
+            ))}
+          </ScrollView>
+        </View>
+      }
+    </>
   )
 }
 
@@ -41,9 +45,6 @@ const styles = StyleSheet.create({
     fontWeight: "200",
     marginBottom: 20
   },
-  contentContainer: {
-    // gap: 13
-  },
   categoryType: {
     backgroundColor: "#292828ff",
     paddingVertical: 19,
@@ -51,7 +52,8 @@ const styles = StyleSheet.create({
     width: 180,
     borderRadius: 20,
     borderColor: "#ffffff",
-    borderWidth: 0.2
+    borderWidth: 0.2,
+    marginRight: 22
   },
   task: {
     color: "#e8ff54",

@@ -1,24 +1,24 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { TODODEMO } from '../data';
-import { TodoDemoType } from '../interface';
 import Checkbox from 'expo-checkbox';
 import { useTaskifyStore } from '../taskifyStore';
 
 export default function TodoList() {
-  const todos: TodoDemoType[] = TODODEMO;
-
   const { tasks, checkedItems, toggleCheckbox } = useTaskifyStore();
-
   console.log(tasks);
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>TODAY'S TASKS</Text>
       <FlatList
-        data={todos}
+        data={tasks && tasks}
         keyExtractor={(item) => item.id.toString()}
         ItemSeparatorComponent={() => <View style={{ height: 23 }} />}
         showsVerticalScrollIndicator={false}
+        ListEmptyComponent={() => (
+          <View style={styles.emptyListContainer}>
+            <Text style={styles.emptyList}>No task. Add a task.</Text>
+          </View>
+        )}
         renderItem={({ item }) => {
           const isChecked = checkedItems[item.id] || false;
 
@@ -37,7 +37,7 @@ export default function TodoList() {
                     isChecked && { textDecorationLine: "line-through", color: "gray" },
                   ]}
                 >
-                  {item.todo}
+                  {item.task}
                 </Text>
                 <Text
                   style={[
@@ -66,6 +66,15 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "200",
     marginBottom: 25,
+  },
+  emptyListContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  emptyList: {
+    color: "#ffffff",
+    fontSize: 18
   },
   todoCard: {
     backgroundColor: "#e8ff54",

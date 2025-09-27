@@ -1,23 +1,70 @@
-import { KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
-import React, { useState } from 'react'
+import { ActivityIndicator, KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
+import { usePathname, useRouter } from 'expo-router';
 import { useTaskifyStore } from '../taskifyStore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StatusBar } from 'expo-status-bar';
 
 
 export default function index() {
   const [error, setError] = useState<string>("")
-  const { username, setUsername } = useTaskifyStore()
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { username, setUsername } = useTaskifyStore();
+  const router = useRouter();
+  const pathname = usePathname();
+  const goHome = () => {
+    router.replace('/home')
+  }
+  goHome()
+  
+  useEffect(() => {
+    // Check if there's a username in AsyncStorage
+    const checkUser = async() => {
+      // await AsyncStorage.clear()
+      setIsLoading(true);
+      try {
+        const username = await AsyncStorage.getItem("username");
+        console.log("username: ", username);
+        if (username && pathname !== '/home') {
+          router.replace('/home')
+        }
+      } finally {
+        setIsLoading(false);
+        console.log("loading: ", isLoading); 
+      }
+    }
 
-  const handleContinue = () => {
-    username.trim().length > 0 
-    ? router.push('/home')
-    : setError("Enter a username");
+    checkUser()
+  }, [])
+
+  // To login
+  const handleContinue = async() => {
+    if (username.trim().length > 0) {
+      await AsyncStorage.setItem("username", username);
+      router.replace('/home');
+    } else {
+      setError("Enter a username");
+    }
+  }
+
+  // Loading component while asycn action takes place
+  if (isLoading) {
+    return (
+      <View style={{ 
+        backgroundColor: "#000000", 
+        flex: 1, 
+        alignItems: "center", 
+        justifyContent: "center" }}
+      >
+        <ActivityIndicator size={40} color={"#e8ff54"} />
+      </View>
+    )
   }
 
   return (
-    
     <SafeAreaView style={styles.container}>
+      <StatusBar style={"light"} />
       <View style={styles.welcomeContainer}>
         <Text style={styles.appName}>Taskify</Text>
         <Text style={styles.welcome}>Welcome</Text>
@@ -31,6 +78,7 @@ export default function index() {
               autoCapitalize="none"
               placeholder='Enter your name'
               placeholderTextColor={"#a49d9dff"}
+              // value={username}
               onChangeText={setUsername}
             />
           </View>

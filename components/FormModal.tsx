@@ -40,6 +40,7 @@ export default function FormModal({ showModal, setShowModal}: FormModalType) {
       time: time,
       category: category
     })
+    handleCloseModal();
   }
 
   return (
