@@ -1,6 +1,4 @@
-import { FlatList, Platform, ScrollView, StyleSheet, Text, View } from 'react-native'
-import { CATEGORYDEMO } from '../data'
-import { CategoryDemoType } from '../interface'
+import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { useTaskifyStore } from '../taskifyStore';
 
 export default function Categories() {
@@ -40,7 +38,7 @@ const styles = StyleSheet.create({
     marginBottom: 23
   },
   title: {
-    color: "#e8ff54",
+    color: "#24ac5fff",
     fontSize: 15,
     fontWeight: "200",
     marginBottom: 20
@@ -56,7 +54,7 @@ const styles = StyleSheet.create({
     marginRight: 22
   },
   task: {
-    color: "#e8ff54",
+    color: "#24ac5fff",
     fontSize: 14,
     fontWeight: "200",
     marginBottom: 8
@@ -73,6 +71,6 @@ const styles = StyleSheet.create({
   },
   progressIn: {
     height: "100%",
-    backgroundColor: "#e8ff54"
+    backgroundColor: "#24ac5fff"
   }
 })

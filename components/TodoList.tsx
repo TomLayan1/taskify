@@ -1,9 +1,10 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { useTaskifyStore } from '../taskifyStore';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 
 export default function TodoList() {
-  const { tasks, checkedItems, toggleCheckbox } = useTaskifyStore();
+  const { tasks, checkedItems, toggleCheckbox, deleteTask } = useTaskifyStore();
   console.log(tasks);
 
   return (
@@ -15,9 +16,9 @@ export default function TodoList() {
         ItemSeparatorComponent={() => <View style={{ height: 23 }} />}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={() => (
-          <View style={styles.emptyListContainer}>
+          // <View style={styles.emptyListContainer}>
             <Text style={styles.emptyList}>No task. Add a task.</Text>
-          </View>
+          // </View>
         )}
         renderItem={({ item }) => {
           const isChecked = checkedItems[item.id] || false;
@@ -48,6 +49,7 @@ export default function TodoList() {
                   {item.time}
                 </Text>
               </View>
+              <Ionicons name='trash-bin' size={22} color="#000000" onPress={() => deleteTask(item.id)} />
             </View>
           );
         }}
@@ -62,7 +64,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    color: "#e8ff54",
+    color: "#24ac5fff",
     fontSize: 15,
     fontWeight: "200",
     marginBottom: 25,
@@ -77,10 +79,10 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
   todoCard: {
-    backgroundColor: "#e8ff54",
+    backgroundColor: "#24ac5fff",
     flexDirection: "row",
     alignItems: "center",
-    gap: 27,
+    gap: 25,
     padding: 12,
     borderRadius: 15,
   },

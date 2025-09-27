@@ -26,6 +26,8 @@ type TaskifyStore = {
   checkedItems: { [key: string]: boolean };
   toggleCheckbox: (id: string | number, value: boolean) => void;
 
+  deleteTask: (id: number) => void;
+
   getCategoryCounts: () => CategoryCount[];
 };
 
@@ -39,6 +41,10 @@ export const useTaskifyStore = create<TaskifyStore>()(
       addTask: (task) =>
         set((state) => ({
           tasks: [...state.tasks, task],
+          checkedItems: {
+            ...state.checkedItems,
+            [task.id]: false
+          }
         })),
     
       checkedItems: {},
@@ -49,7 +55,11 @@ export const useTaskifyStore = create<TaskifyStore>()(
             [id]: value,
           },
         })),
-
+      
+      deleteTask: (id) => 
+        set((state) => ({
+          tasks: state.tasks.filter(task => task?.id !== id)
+        })),
       getCategoryCounts: () => {
         const { tasks } = get();
         const categoryMap: Record<string, number> = {};

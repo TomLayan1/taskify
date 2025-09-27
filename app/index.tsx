@@ -8,20 +8,15 @@ import { StatusBar } from 'expo-status-bar';
 
 
 export default function index() {
-  const [error, setError] = useState<string>("")
+  const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { username, setUsername } = useTaskifyStore();
   const router = useRouter();
   const pathname = usePathname();
-  const goHome = () => {
-    router.replace('/home')
-  }
-  goHome()
   
   useEffect(() => {
     // Check if there's a username in AsyncStorage
     const checkUser = async() => {
-      // await AsyncStorage.clear()
       setIsLoading(true);
       try {
         const username = await AsyncStorage.getItem("username");
@@ -78,7 +73,6 @@ export default function index() {
               autoCapitalize="none"
               placeholder='Enter your name'
               placeholderTextColor={"#a49d9dff"}
-              // value={username}
               onChangeText={setUsername}
             />
           </View>
@@ -105,11 +99,11 @@ const styles = StyleSheet.create({
     marginBottom: 120
   },
   appName: {
-    color: "#e8ff54",
+    color: "#24ac5fff",
     fontSize: 50,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 20
+    marginBottom: 5
   },
   welcome: {
     color: "#ffffff",
@@ -132,12 +126,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     width: "100%",
     backgroundColor: "#545151ff",
-    padding: 12,
+    padding: 14,
     borderRadius: 8
   },
   cntBtn: {
     width: "100%",
-    backgroundColor: "#e8ff54",
+    backgroundColor: "#24ac5fff",
     padding: 12,
     borderRadius: 8
   },

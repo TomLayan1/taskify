@@ -2,18 +2,13 @@ import { Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-nativ
 import { FontAwesome } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import TimePicker from './TimePicker';
-import { CATEGORYDEMO } from '../data';
-import { CategoryDemoType } from '../interface';
 import DropDown from './DropDown';
 import { useTaskifyStore } from '../taskifyStore';
-
 
 type FormModalType = {
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>
 }
-
-
 
 export default function FormModal({ showModal, setShowModal}: FormModalType) {
   const [task, setTask] = useState<string>("");
@@ -21,10 +16,8 @@ export default function FormModal({ showModal, setShowModal}: FormModalType) {
   const [time, setTime] = useState<string>("");
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
-  // import addtask
+  // import tasks and addtask store
   const { tasks, addTask } = useTaskifyStore();
-
-  const categories: CategoryDemoType[] = CATEGORYDEMO;
 
   const handleCloseModal = () => {
     setShowModal(false);
@@ -35,7 +28,7 @@ export default function FormModal({ showModal, setShowModal}: FormModalType) {
 
   const handleAddTask = () => {
     addTask({
-      id: tasks.length + 1,
+      id: Date.now(),
       task: task,
       time: time,
       category: category
@@ -110,8 +103,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     width: "100%",
-    // height: "63%",
-    backgroundColor: "#cee72bff",
+    backgroundColor: "#24ac5fff",
     padding: 20,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25
@@ -175,7 +167,7 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   edit:{
-    color: '#cee72bff',
+    color: '#24ac5fff',
     fontSize: 16,
     fontWeight: "200"
   },

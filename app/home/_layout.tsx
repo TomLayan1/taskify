@@ -2,7 +2,7 @@ import { Drawer } from 'expo-router/drawer';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Image } from 'react-native';
 import CustomDrawerContent from '../../components/CustomDrawerComponent';
-const ria = require('../../assets/ria.jpg');
+const ria = require('../../assets/profile.jpeg');
 
 
 export default function RootLayout() {
@@ -20,7 +20,7 @@ export default function RootLayout() {
           drawerContentStyle: {
             backgroundColor: "#292828ff",
           },
-          drawerActiveTintColor: "#e8ff54",
+          drawerActiveTintColor: "#24ac5fff",
           drawerInactiveTintColor: "#000000",
           drawerLabelStyle: {
             fontSize: 16,

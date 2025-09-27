@@ -2,16 +2,16 @@ import { DrawerContentScrollView, DrawerItemList, DrawerItem } from "@react-navi
 import { View, StyleSheet } from "react-native";
 import { useTaskifyStore } from "../taskifyStore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRouter } from "expo-router";
 
 
 function CustomDrawerContent(props: any) {
-  const { setUsername } = useTaskifyStore();
-
+  const router = useRouter();
   const handleLogout = async() => {
     // clear username or reset 
-    await AsyncStorage.removeItem("username");
+    await AsyncStorage.clear();
     // optionally navigate back to login/onboarding screen
-    props.navigation.navigate("/");
+    router.replace("/");
   };
 
   return (
@@ -25,7 +25,7 @@ function CustomDrawerContent(props: any) {
       <View style={styles.logoutContainer}>
         <DrawerItem
           label="Logout"
-          labelStyle={{ color: "red", fontWeight: "bold" }}
+          labelStyle={{ color: "#ea486bff", fontWeight: "bold", fontSize: 17 }}
           onPress={handleLogout}
         />
       </View>
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   logoutContainer: {
     borderTopWidth: 1,
     borderTopColor: "#444",
-    paddingBottom: 20,
+    padding: 10,
   },
 });
 
