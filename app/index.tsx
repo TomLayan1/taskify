@@ -1,4 +1,4 @@
-import { ActivityIndicator, KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import { ActivityIndicator, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { usePathname, useRouter } from 'expo-router';
@@ -76,9 +76,9 @@ export default function index() {
               onChangeText={setUsername}
             />
           </View>
-          <Pressable style={styles.cntBtn} onPress={handleContinue}>
+          <TouchableOpacity style={styles.cntBtn} onPress={handleContinue}>
             <Text style={styles.cntTxt}>Continue</Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>

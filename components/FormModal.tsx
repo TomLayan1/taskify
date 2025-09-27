@@ -1,4 +1,4 @@
-import { Modal, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import TimePicker from './TimePicker';
@@ -17,7 +17,7 @@ export default function FormModal({ showModal, setShowModal}: FormModalType) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   // import tasks and addtask store
-  const { tasks, addTask } = useTaskifyStore();
+  const { addTask } = useTaskifyStore();
 
   const handleCloseModal = () => {
     setShowModal(false);
@@ -48,9 +48,7 @@ export default function FormModal({ showModal, setShowModal}: FormModalType) {
         <View style={styles.modalContent}>
           <View style={styles.modalHeaderContainer}>
             <Text style={styles.modalTitle}>Add Tasks</Text>
-            <Pressable onPress={handleCloseModal}>
-              <FontAwesome name="times" size={25} color="#000000" />
-            </Pressable>
+            <FontAwesome name="times" size={25} color="#000000" onPress={handleCloseModal} />
           </View>
 
           {/* Form */}
@@ -76,9 +74,9 @@ export default function FormModal({ showModal, setShowModal}: FormModalType) {
               <Text style={styles.fieldTitle}>Time</Text>
               <View style={styles.timeEditContainer}>
                 <Text style={styles.time}>{time.length > 0 && time}</Text>
-                <Pressable onPress={() => setIsEditing(true)}>
+                <TouchableOpacity onPress={() => setIsEditing(true)}>
                   <Text style={styles.edit}>Edit</Text>
-                </Pressable>
+                </TouchableOpacity>
               </View>
             </View>
             :
@@ -86,9 +84,9 @@ export default function FormModal({ showModal, setShowModal}: FormModalType) {
           }
 
           {/* Add Button */}
-          {task && category && time && <Pressable style={styles.addTodoBtn} onPress={() => handleAddTask()}>
+          {task && category && time && <TouchableOpacity style={styles.addTodoBtn} onPress={() => handleAddTask()}>
             <Text style={styles.btnText}>Add Task</Text>
-          </Pressable>}
+          </TouchableOpacity>}
         </View>
       </View>
     </Modal>

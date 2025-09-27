@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 type TimePickerProps = {
   setTime: React.Dispatch<React.SetStateAction<string>>;
@@ -58,12 +58,12 @@ export default function TimePicker({ setTime, setIsEditing }: TimePickerProps) {
       </View>
 
       {/* Confirm Button */}
-      <Pressable
+      <TouchableOpacity
         style={styles.confirmBtn}
         onPress={() => {setTime(`${formatTime(hours)}:${formatTime(minutes)} ${timeOfDay}`), setIsEditing(false)}}
       >
         <Text style={styles.confirmText}>Set Time</Text>
-      </Pressable>
+      </TouchableOpacity>
     </View>
   )
 }

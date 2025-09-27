@@ -1,10 +1,9 @@
-import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { useTaskifyStore } from '../taskifyStore';
 
 export default function Categories() {
   const { getCategoryCounts } = useTaskifyStore();
   const categories = getCategoryCounts();
-  console.log("Categories: ", categories.length);
 
   return (
     <>

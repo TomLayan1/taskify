@@ -13,7 +13,7 @@ type DropdownType = {
 
 // Dropdown data
 const data:DropdownType[] = [
-  { label: 'Business', value: 'Business' },
+  { label: 'Work', value: 'Work' },
   { label: 'School', value: 'School' },
   { label: 'Family', value: 'Family' },
   { label: 'Personal', value: 'Personal' },

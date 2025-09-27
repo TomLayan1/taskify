@@ -1,11 +1,10 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { useTaskifyStore } from '../taskifyStore';
-import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function TodoList() {
   const { tasks, checkedItems, toggleCheckbox, deleteTask } = useTaskifyStore();
-  console.log(tasks);
 
   return (
     <View style={styles.container}>
